@@ -1,5 +1,10 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
-const nextConfig: NextConfig = {};
+const config: NextConfig = {
+  // Include PHP reference files in Vercel's output bundle
+  outputFileTracingIncludes: {
+    '/': ['./seeder-tool/references/**/*.php'],
+  },
+};
 
-export default nextConfig;
+export default config;

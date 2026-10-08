@@ -362,7 +362,7 @@ export default function SeederTool({
       localStorage.setItem('seeder_models_dictionary', JSON.stringify(fresh));
       const entries = Object.entries(fresh)
         .sort(([a], [b]) => a.localeCompare(b))
-        .map(([name, columns]: [string, string[]]) => ({ name, columns: [...columns] }));
+        .map(([name, columns]) => ({ name, columns: [...(columns as string[])] }));
       setModalModels(entries);
       setAddColumnInputs(entries.map(() => ''));
       showToast(`Reset to ${modelCount} PHP reference models`, 'info');

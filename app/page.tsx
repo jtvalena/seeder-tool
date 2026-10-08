@@ -1,5 +1,5 @@
 import SeederTool from './components/SeederTool';
-import { MODELS_FROM_PHP, MODEL_COUNT } from 'virtual:php-models';
+import modelsData from './data/models-generated.json';
 
 export const metadata = {
   title: 'Seeder AutoFill Tool',
@@ -7,5 +7,7 @@ export const metadata = {
 };
 
 export default function Home() {
-  return <SeederTool initialModels={MODELS_FROM_PHP} modelCount={MODEL_COUNT} />;
+  const models = modelsData as Record<string, string[]>;
+  const count = Object.keys(models).length;
+  return <SeederTool initialModels={models} modelCount={count} />;
 }

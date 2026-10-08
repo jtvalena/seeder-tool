@@ -1,0 +1,8 @@
+{
+    "services": [
+        {
+        "binding": "RESPONSE_STORE",
+        "service": "seeder-tool-response-store"
+        }
+    ]
+}
