@@ -1,0 +1,415 @@
+export const MODELS_REFERENCE: Record<string, string[]> = {
+  "AdminAccountability": [
+    "id", "accountability_num", "emp_id", "location_id", "department_id",
+    "prepared_by", "checked_by", "noted_by", "updated_by", "company_id",
+    "purpose", "audit_findings", "item_category", "admin_category_id", "printed",
+    "warehouse_id", "filed", "filed_date", "ref_doc", "borrowed",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminAccountabilityFile": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminAccountabilityItem": [
+    "id", "admin_assets_list_id", "admin_accountability_id",
+    "previous_admin_accountability_id", "admin_category_id", "item_name",
+    "remarks", "status", "company_id", "admin_asset_condition_id", "item_id",
+    "employee_id", "vendor_id", "warehouse_item_id", "admin_asset_turnover_item_id",
+    "printed", "borrowed", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminAccountabilityItemFile": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminAssetCondition": ["id", "code", "description", "deleted_at", "created_at", "updated_at"],
+  "AdminAssetLdrfType": ["id", "name", "created_at", "updated_at"],
+  "AdminAssetMigrationWithPo": ["id", "created_at", "updated_at"],
+  "AdminAssetTurnover": [
+    "id", "admin_location_id", "department_id", "employee_data_id",
+    "employee_data_ids", "ldrf", "repairable", "purpose", "audit_findings",
+    "status", "created_by", "updated_by", "deleted_by",
+    "account_to_employee_data_id", "approved_by", "approved_date",
+    "turn_over_num", "admin_asset_ldrf_type_id", "others_text", "ldrf_reason",
+    "it_conclusion", "to_department_id", "to_system_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminAssetTurnoverFile": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminAssetTurnoverItem": [
+    "id", "admin_asset_turnover_id", "admin_accountability_id",
+    "admin_accountability_item_id", "admin_assets_list_id",
+    "admin_asset_condition_id", "warehouse_id", "account_to_employee_data_id",
+    "depreciated_life", "amount", "employee_shoulder", "company_shoulder",
+    "billable", "atd_status", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminAssetTurnoverItemFile": [
+    "id", "name", "path", "extension", "type", "upload_by",
+    "admin_asset_turnover_item_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminAssetsList": [
+    "id", "asset_num", "asset_code", "emp_id", "name", "tag_print_base69",
+    "qr_code_base69", "supplier_id", "item_id", "admin_purchase_order_item_id",
+    "admin_fas_purchase_requisition_item_id", "category_id", "status", "active",
+    "brand_id", "department_id", "location_id", "serial", "classification_id",
+    "sub_classification_id", "warranty", "cost", "purchase_date", "description",
+    "company_id", "store_branch_id", "created_at", "updated_at", "accounted",
+    "warehouse_id", "admin_warehouse_item_stocks_id", "brand",
+    "item_serial_number", "no_serial", "basket_item_id", "manual_add",
+    "printed", "purchase_price", "purchase_order_reference", "from_import",
+    "placed", "add_to_stock", "parent_asset_id", "from_sysmtem_id",
+    "transfered_by", "from_asset_id", "other_system_po_num"
+  ],
+  "AdminBrand": ["id", "code", "name", "active", "created_at", "updated_at"],
+  "AdminCategories": ["id", "created_at", "updated_at"],
+  "AdminClassification": ["id", "created_at", "updated_at"],
+  "AdminClassificationSub": [
+    "id", "admin_classification_id", "code", "name", "coa_id", "active",
+    "created_at", "updated_at"
+  ],
+  "AdminDeliveryAddress": [
+    "id", "code", "name", "asset_tag_assign", "location_type", "active",
+    "address", "contact_number", "type", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminDeliveryReceipt": [
+    "id", "reference_number", "admin_purchase_order_id", "delivery_to",
+    "delivery_address", "warehouse_id", "customer_id", "remarks",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminDeliveryReceiptItem": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminDisposal": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminDrPoSelected": [
+    "id", "admin_delivery_receipt_id", "admin_purchase_order_id",
+    "created_at", "updated_at"
+  ],
+  "AdminEmployeeItemsRequestPo": [
+    "id", "admin_purchase_order_item_ids", "employee_ids",
+    "admin_purchase_order_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminEmployeeStoreOrderItem": ["id", "created_at", "updated_at"],
+  "AdminFasBasket": [
+    "id", "ref_num", "company_id", "store_branches_id", "department_id",
+    "location_id", "prepared_by", "updated_by", "status", "total_amount",
+    "reject_reason", "remarks", "expected_date", "basket_type", "type",
+    "capital_vendor_id", "adjusted_by", "adjusted_date",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasBasketItems": [
+    "id", "admin_fas_basket_id", "vendor_id", "admin_fas_requisition_item_id",
+    "capital_vendor_id", "quantity", "item_price", "total_amount",
+    "approved_quantity", "buffer_stocks", "basket_canvassing_id", "item_id",
+    "item_name", "uom_id", "paid", "item_vendor_price_list_id",
+    "admin_warehouse_stocks_id", "received_qty", "pending_qty", "cancelled",
+    "quantity_billed", "capitalization_paid", "admin_purchase_order_item_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasBasketSubItem": [
+    "id", "admin_fas_basket_id", "admin_fas_basket_item_id", "vendor_id",
+    "item_name", "item_id", "quantity", "price", "total_amount", "po_created",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasPurchaseRequisition": [
+    "id", "fas_number", "department_id", "location_id", "status", "company_id",
+    "store_branches_id", "admin_remarks", "justification_remarks", "total_amount",
+    "requested_by", "endorse_by", "processed_by", "noted_by",
+    "items_received_by", "budget_checked_by", "expected_date", "has_po",
+    "type", "transaction_type", "reject_reason", "petty_cash", "deleted_by",
+    "adjusted_by", "adjusted_at", "capital_vendor_id", "capital_company_id",
+    "capital_store_branch_id", "admin_warehouse_id", "requestor_department_id",
+    "confirmed_date", "approved_date", "admin_checked_date",
+    "admin_received_date", "admin_approved_date", "admin_rejected_date",
+    "received", "mass_created", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasPurchaseRequisitionFiles": [
+    "id", "admin_fas_purchase_requisition_ids", "name", "path", "type",
+    "extension", "uploaded_by", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasPurchaseRequisitionItemAccountable": [
+    "id", "admin_fas_purchase_requisition_item_id", "employee_id",
+    "department_id", "quantity", "admin_purchase_order_item_id",
+    "created_at", "updated_at"
+  ],
+  "AdminFasPurchaseRequisitionItemByPo": ["id", "created_at", "updated_at"],
+  "AdminFasPurchaseRequisitionItems": [
+    "id", "fas_number", "fas_item_id", "quantity", "uom_id", "total_amount",
+    "approved_quantity", "item_price", "admin_fpr_id", "item_name",
+    "justification_remarks", "po_created", "outbound_qty",
+    "item_vendor_price_list_id", "admin_warehouse_stocks_id", "pending_qty",
+    "quantity_billed", "capitalization_paid", "requested_qty",
+    "admin_purchase_order_item_id", "capital_vendor_id", "capital_company_id",
+    "capital_store_branch_id", "admin_warehouse_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminFasSelected": [
+    "id", "admin_fas_basket_id", "admin_fas_requisition_id",
+    "created_at", "updated_at"
+  ],
+  "AdminInboundOutbound": [
+    "id", "transaction_number", "transact_id", "inbound_outbound_type_id",
+    "type", "remarks", "status", "customer_id", "location_id", "department_id",
+    "warehouse_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminInboundOutboundFile": [
+    "id", "admin_inbound_outbound_id", "name", "path", "type", "uploaded_by",
+    "deleted_by", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminInboundOutboundItems": [
+    "id", "admin_inbound_outbound_id", "transact_item_id",
+    "admin_fas_purchase_requisition_item_id", "in_qty",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminItemBasketCanvassing": ["id", "created_at", "updated_at"],
+  "AdminItemPackagesComponents": [
+    "id", "package_admin_item_id", "admin_item_id", "created_at", "updated_at"
+  ],
+  "AdminItemSize": [
+    "id", "code", "name", "description", "active", "created_at", "updated_at"
+  ],
+  "AdminItemTemp": [
+    "id", "admin_item_id", "item_category", "item_name",
+    "admin_classification_id", "admin_classification_sub_id",
+    "admin_category_id", "image_path", "remarks", "active", "model_number",
+    "serial_number", "brand_id", "consume_type", "created_by", "updated_by",
+    "deleted_by", "service", "required_serial", "date_updated", "approved",
+    "base_price", "is_packages", "color_id", "item_specs",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminItemUom": [
+    "id", "code", "description", "name", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminItems": [
+    "id", "item_category", "item_name", "admin_classification_id",
+    "admin_classification_sub_id", "admin_category_id", "sub_asset_num",
+    "image_path", "remarks", "active", "model_number", "serial_number",
+    "brand_id", "color_id", "item_specs", "consume_type", "created_by",
+    "updated_by", "deleted_by", "service", "required_serial", "base_price",
+    "is_packages", "department_id", "service_type", "for_vehicle",
+    "from_system_id", "admin_item_size_id", "admin_model_id", "old_item_name",
+    "duplicate_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminJobOrder": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminJobOrderDimension": ["id", "created_at", "updated_at"],
+  "AdminJobOrderFile": [
+    "id", "name", "path", "extension", "type", "upload_by",
+    "admin_job_order_id", "created_at", "updated_at"
+  ],
+  "AdminJobOrderItemMaterial": ["id", "created_at", "updated_at"],
+  "AdminJobOrderItems": [
+    "id", "admin_item_id", "item_vendor_price_list_id", "job_order_ids",
+    "job_order_number", "quantity", "total_amount", "has_dimension",
+    "item_overall_amount", "item_paid_amount", "balance_amount",
+    "billed_amount", "created_at", "updated_at"
+  ],
+  "AdminLocation": [
+    "id", "code", "name", "asset_tag_assign", "location_type", "active",
+    "company_id", "store_branch_id", "admin_warehouse_id",
+    "created_at", "updated_at"
+  ],
+  "AdminModel": ["id", "name", "code", "description", "created_at", "updated_at"],
+  "AdminPurchaseBasketTransactionItem": ["id", "created_at", "updated_at"],
+  "AdminPurchaseOrder": [
+    "id", "po_num", "location_id", "shipping_via_id", "vendor_id",
+    "vendor_payment_item_id", "vendor_address_id", "total_amount", "remarks",
+    "status", "type", "prepared_by", "checked_by", "noted_by", "company_id",
+    "store_branch_id", "expected_date", "number_of_days", "deleted_at",
+    "comments", "for_payment", "payment_method", "amount_to_pay",
+    "total_paid_amount", "is_overdue", "rush", "updated_by", "payment_type_id",
+    "contact_person", "contact_number", "customer_request", "customer_id",
+    "billable", "requestor", "request_id", "confirmed_by", "approve_admin_by",
+    "exec_approved_by", "confirmed_date", "admin_approved_date",
+    "exec_approved_date", "admin_fas_basket_id", "age", "payment_status",
+    "receiving_status", "must_reprint", "exchange_deal", "outbound_status",
+    "transfer_to", "transfer_from", "total_billed_amount",
+    "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderAmendment": [
+    "id", "admin_purchase_order_id", "transaction_number", "location_id",
+    "vendor_id", "total_amount", "remarks", "status", "type", "rush",
+    "prepared_by", "approve_admin_by", "updated_by", "company_id",
+    "store_branch_id", "payment_method", "shipping_via_id", "vendor_address_id",
+    "vendor_payment_item_id", "expected_date", "number_of_days", "is_overdue",
+    "paid", "total_paid_amount", "total_billed_amount", "received",
+    "amount_to_pay", "dr_number", "contact_person", "contact_number",
+    "payment_type_id", "confirmed_by", "exec_approved_by", "confirmed_date",
+    "admin_approved_date", "request_id", "customer_request", "customer_id",
+    "soa_id", "billable", "requestor", "admin_warehouse_id",
+    "admin_fas_basket_id", "exchange_deal", "amendment_type", "transmitted",
+    "transmitted_by", "transmitted_date", "full_return", "filed", "filed_date",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderAmendmentFile": [
+    "id", "admin_purchase_order_amendment_id", "name", "path", "extension",
+    "type", "uploaded_by", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderAmendmentItem": [
+    "id", "admin_purchase_order_amendment_id", "admin_purchase_order_item_id",
+    "admin_item_id", "paid", "quantity", "pending_qty", "canceled_qty", "foc",
+    "priority", "total_amount", "item_amount_to_pay", "item_paid_amount",
+    "receive_qty", "original_price", "total_original_price", "request_item_id",
+    "tagged", "received_qty", "consumed_qty", "basket_item_id",
+    "item_vendor_price_list_id", "dr_price", "uom_id", "billed_amount",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderDeliveryReceipt": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminPurchaseOrderFile": [
+    "id", "po_id", "name", "path", "upload_by", "extension", "type",
+    "upload_type", "po_item_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderItem": [
+    "id", "admin_purchase_order_id", "admin_item_id", "paid", "foc",
+    "priority", "total_amount", "company_id", "quantity", "item_paid_amount",
+    "receive_qty", "pending_qty", "canceled_qty", "amount_to_pay",
+    "original_price", "total_original_price", "basket_item_id",
+    "item_vendor_price_list_id", "received_qty", "dr_price", "reprint",
+    "uom_id", "from_sysmtem_id", "transfered_by", "from_asset_id",
+    "billed_amount", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderItemsReceivedLog": [
+    "id", "admin_purchase_order_id", "admin_purchase_order_item_id",
+    "receive_qty", "received_by", "receive_paid_amount", "admin_item_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderItemsTemplate": [
+    "id", "code", "name", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminPurchaseOrderItemsTemplateDetails": [
+    "id", "template_id", "admin_item_id", "admin_item_name", "quantity",
+    "admin_item_uom_id", "moq", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminReleaseForm": [
+    "id", "admin_accountability_id", "accountability_num", "arf_num",
+    "previous_accountability_num", "date_prepared", "time_delivered",
+    "vehicle_id", "driver_name", "contact_number", "contact_person",
+    "company_id", "store_branch_id", "sdr_number",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminReleaseFormItem": [
+    "id", "admin_release_form_id", "item_name", "admin_item_id", "ref_doc",
+    "admin_fas_purchase_requisition_item_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminRepairRequestForm": [
+    "id", "jo_number", "rrf_id", "vendor_id", "client_contact_person",
+    "client_contact", "vendor_payment_item_id", "date_needed", "work_duration",
+    "date_start", "date_finish", "total_material_cost", "total_cost", "remarks",
+    "requested_by", "approve_admin_by", "endorsed_by", "processed_by",
+    "noted_by", "approved_by", "updated_by", "deleted_by", "status",
+    "payment_id", "vendor_address_id", "created_at", "updated_at", "deleted_at",
+    "paid", "department_id", "admin_location_id", "repair_category",
+    "repair_type_id", "company_id", "store_branch_id", "vehicle_id",
+    "payment_method", "total_service_amount", "total_amount", "total_paid_amount",
+    "other_repair_category", "other_repair_type", "accomplished", "billable",
+    "customer_request", "customer_id", "soa_id", "requestor", "balance_amount",
+    "amount_type", "received", "received_by", "received_date"
+  ],
+  "AdminRepairRequestFormFile": [
+    "id", "name", "path", "extension", "type", "uploaded_by", "arrf_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminRepairRequestFormItem": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminRepairRequestFormItemMaterial": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminRequestTransactionItem": [
+    "id", "request_transaction_type_id", "transaction_id",
+    "request_trasaction_id", "created_at", "updated_at"
+  ],
+  "AdminRequestTransactionType": ["id", "created_at", "updated_at"],
+  "AdminRrfSelected": ["id", "created_at", "updated_at"],
+  "AdminServiceProvider": [
+    "id", "recurring_bill_type_id", "code", "name", "vendor_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminServiceProviderItem": [
+    "id", "admin_service_provider_id", "service_number", "account_number",
+    "account_name", "location", "location_id", "company_id", "store_branch_id",
+    "package", "service_address", "customer_type", "electric_meter_number",
+    "meter_reading_day", "company_expense_id", "expected_soa_date",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminStockAdjustment": [
+    "id", "reference_num", "admin_warehouse_id", "remarks", "requestor_id",
+    "requestor_name", "created_by_id", "created_by_name", "status",
+    "processed_by", "processed_date", "adjust_stock", "adjust_movement",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminStockAdjustmentFile": ["id", "created_at", "updated_at"],
+  "AdminStockAdjustmentItem": [
+    "id", "stock_adjustment_id", "item_id", "quantity", "qty_in", "qty_out",
+    "check_in", "check_out", "accounted", "unaccounted",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminStockTransfer": [
+    "id", "reference_num", "from_admin_warehouse_id", "to_admin_warehouse_id",
+    "remarks", "requestor_id", "requestor_name", "created_by_id",
+    "created_by_name", "status", "approved_by", "approved_date",
+    "adjust_stock", "adjust_movement", "quantity",
+    "created_at", "updated_at", "deleted_at"
+  ],
+  "AdminStockTransferItem": [
+    "id", "admin_stock_transfer_id", "item_id", "quantity",
+    "created_at", "updated_at", "deleted_at"
+  ],
+  "AdminStoreOrder": [
+    "id", "store_order_num", "location_id", "shipping_via_id", "vendor_id",
+    "vendor_payment_item_id", "vendor_address_id", "total_amount", "remarks",
+    "status", "type", "prepared_by", "checked_by", "noted_by", "company_id",
+    "store_branch_id", "expected_date", "number_of_days", "deleted_at",
+    "comments", "for_payment", "payment_method", "amount_to_pay",
+    "total_paid_amount", "is_overdue", "rush", "updated_by", "payment_type_id",
+    "contact_person", "contact_number", "customer_request", "customer_id",
+    "billable", "requestor", "request_id", "confirmed_by", "approve_admin_by",
+    "exec_approved_by", "confirmed_date", "admin_approved_date",
+    "exec_approved_date", "admin_fas_basket_id", "outbound_status",
+    "created_at", "updated_at"
+  ],
+  "AdminStoreOrderDeliveryReceipt": ["id", "created_at", "updated_at"],
+  "AdminStoreOrderFiles": [
+    "id", "store_order_id", "name", "path", "upload_by", "extension", "type",
+    "upload_type", "store_order_item_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminStoreOrderItem": [
+    "id", "admin_store_order_id", "admin_item_id", "paid", "foc", "priority",
+    "total_amount", "company_id", "quantity", "item_paid_amount", "receive_qty",
+    "pending_qty", "canceled_qty", "amount_to_pay", "original_price",
+    "total_original_price", "basket_item_id", "item_vendor_price_list_id",
+    "dr_price", "created_at", "updated_at"
+  ],
+  "AdminStoreOrderItemReceivedLogs": [
+    "id", "admin_store_order_id", "admin_store_order_item_id", "receive_qty",
+    "received_by", "receive_paid_amount", "admin_item_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminTransmittal": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminTransmittalEnterBill": [
+    "id", "admin_transmittal_id", "admin_transmittal_item_id",
+    "admin_enter_bill_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminTransmittalItem": [
+    "id", "admin_transmittal_id", "company_id", "store_branch_id",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminTransmittalJobOrder": [
+    "id", "admin_transmittal_id", "admin_transmittal_item_id",
+    "admin_job_order_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminTransmittalPurchaseOrder": [
+    "id", "admin_transmittal_id", "admin_transmittal_item_id",
+    "admin_purchase_order_id", "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminWarehouse": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminWarehouseItemStock": [
+    "id", "admin_warehouse_id", "admin_item_id", "check_in", "check_out",
+    "quantity", "accounted", "unaccounted", "tagged", "msq", "reserved",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminWarehouseItemStocksLog": ["id", "created_at", "updated_at"],
+  "AdminWarehousePreparationList": [
+    "id", "admin_wpf_num", "status", "admin_location_id", "description",
+    "prepared_by", "approved_by", "approved_date", "updated_by",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminWarehousePreparationListItem": [
+    "id", "admin_warehouse_preparation_list_id", "admin_assets_list_id",
+    "status_id", "asset_code", "serial_number", "placed",
+    "deleted_at", "created_at", "updated_at"
+  ],
+  "AdminWarehouseStocks": ["id", "deleted_at", "created_at", "updated_at"],
+  "AdminWarehouseUser": [
+    "id", "user_id", "admin_warehouse_id", "created_at", "updated_at"
+  ],
+  "AdministrativeApprovalCapacity": [
+    "id", "position_id", "division", "range", "user_id", "department_id",
+    "deleted_at", "created_at", "updated_at"
+  ]
+};

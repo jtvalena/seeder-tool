@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Models;
+
+use App\Traits\Caching;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+
+class PayrollPeriodInfo extends Model implements Auditable
+{
+    use HasFactory, Caching;
+    use \OwenIt\Auditing\Auditable;
+
+    protected $fillable = [
+        'name',
+        'payroll_month',
+        'type',
+    ];
+
+    public static function boot()
+    {
+        parent::boot();
+        $cache_names = [
+            'payroll_period_info_selection',
+        ];
+        static::created((function ($model) use($cache_names) {
+            $model->forget($cache_names);
+        }));
+        static::updated((function ($model) use($cache_names) {
+            $model->forget($cache_names);
+        }));
+        static::deleted((function ($model) use($cache_names) {
+            $model->forget($cache_names);
+        }));
+    }
+
+    public function payroll_periods(){
+        return $this->hasMany(PayrollPeriod::class, 'payroll_period_info_id');
+    }
+}

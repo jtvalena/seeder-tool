@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seeder Script Generator Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+  <div class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo-icon">⚡</div>
+        <div class="brand-text">
+          <h1>Seeder AutoFill Tool</h1>
+          <span class="badge">v1.0</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="manageModelsBtn" class="btn btn-secondary" title="Manage Models and Columns">
+          Models & Columns
+        </button>
+        <button id="themeToggleBtn" class="btn btn-icon" title="Toggle Theme">
+          <span class="sun-icon">☀️</span>
+          <span class="moon-icon">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="workspace">
+      <!-- LEFT PANEL: Seeder Generator Form -->
+      <section class="panel generator-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>Seeder Generator</h2>
+          </div>
+          <button id="resetFormBtn" class="btn btn-sm btn-ghost" title="Reset Form Fields">Reset</button>
+        </div>
+
+        <form id="seederForm" class="generator-form" onsubmit="return false;">
+          <!-- 1. Company Selector -->
+          <div class="form-group">
+            <label class="form-label" for="companySelect">
+              Company <span class="required">*</span>
+            </label>
+            <div class="company-selector-group">
+              <select id="companySelect" class="form-control">
+                <option value="INGCO">INGCO</option>
+                <option value="WADFOW">WADFOW</option>
+              </select>
+              <input type="text" id="customCompanyInput" class="form-control hidden" placeholder="Enter custom prefix...">
+            </div>
+          </div>
+
+          <!-- 2. Searchable Seeder Type Selector -->
+          <div class="form-group">
+            <label class="form-label">
+              Seeder Type <span class="required">*</span>
+            </label>
+            <div id="seederTypeSearchable" class="searchable-select-wrapper"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- 3. Dynamic Fields Container -->
+          <div id="dynamicFieldsContainer" class="dynamic-fields">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+
+          <!-- Action Bar -->
+          <div class="form-action-bar">
+            <button type="submit" id="generateBtn" class="btn btn-primary btn-block btn-lg">
+              <span>Generate & Append</span>
+              <kbd class="hotkey-badge">Ctrl + Enter</kbd>
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT PANEL: Notepad / Output Log -->
+      <section class="panel notepad-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <h2>Generated Seeders Notepad</h2>
+            <span id="entryCounter" class="counter-badge">0 entries</span>
+          </div>
+          <div class="panel-actions">
+            <button id="copyAllBtn" class="btn btn-sm btn-primary" title="Copy Notepad Content">
+              Copy All
+            </button>
+            <button id="downloadBtn" class="btn btn-sm btn-secondary" title="Download as .txt file">
+              Download
+            </button>
+            <button id="undoBtn" class="btn btn-sm btn-secondary" title="Remove Last Appended Entry" disabled>
+              Undo
+            </button>
+            <button id="clearNotepadBtn" class="btn btn-sm btn-danger-ghost" title="Clear Notepad">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <!-- Fixed header: always included on Copy All / Download, never erased by Clear -->
+        <div id="notepadFixedHeader" class="notepad-fixed-header" title="This line is always included when you copy or download">
+          <span class="fixed-header-text" id="notepadFixedHeaderText">Seeder to run: php artisan db:seed BulkUpdateFromText</span>
+          <span class="fixed-header-lock">🔒 locked</span>
+        </div>
+
+        <div class="notepad-wrapper">
+          <textarea id="notepadTextarea" placeholder="Generated seeder outputs will appear here when you click 'Generate' on the left panel...
+
+You can also directly edit or add notes manually in this notepad." spellcheck="false"></textarea>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODAL: Manage Models & Columns -->
+  <div id="modelsModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <h3>Manage Models & Columns</h3>
+        </div>
+        <button id="closeModalBtn" class="btn btn-icon modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-toolbar">
+          <button id="addNewModelBtn" class="btn btn-sm btn-primary">+ Add New Model</button>
+          <button id="resetModelsBtn" class="btn btn-sm btn-secondary">Reset to Reference Defaults</button>
+        </div>
+        <div id="modelList" class="model-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="saveModelsBtn" class="btn btn-primary">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <style>
+    .notepad-fixed-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 8px 0;
+      padding: 10px 14px;
+      border: 1px solid rgba(127, 127, 127, 0.35);
+      border-left: 3px solid #6366f1;
+      border-radius: 8px;
+      background: rgba(127, 127, 127, 0.12);
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      user-select: text;
+    }
+    .notepad-fixed-header .fixed-header-lock {
+      font-size: 11px;
+      opacity: 0.6;
+      white-space: nowrap;
+      user-select: none;
+    }
+  </style>
+
+  <script src="models_reference.js"></script>
+  <script src="app.js"></script>
+  <script>
+    /* Fixed notepad header: prepended to Copy All and Download output.
+       Runs in the capture phase on the button container so it takes over
+       those two buttons without touching app.js. Clear/Undo are unaffected
+       because the header lives outside the textarea. */
+    (function () {
+      var FIXED_HEADER = document.getElementById('notepadFixedHeaderText').textContent.trim();
+      var textarea = document.getElementById('notepadTextarea');
+
+      function fullContent() {
+        var body = textarea.value;
+        return body.trim() ? FIXED_HEADER + '\n\n' + body : FIXED_HEADER;
+      }
+
+      function flash(btn, msg) {
+        var original = btn.textContent;
+        btn.textContent = msg;
+        setTimeout(function () { btn.textContent = original; }, 1200);
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          var tmp = document.createElement('textarea');
+          tmp.value = text;
+          tmp.style.position = 'fixed';
+          tmp.style.opacity = '0';
+          document.body.appendChild(tmp);
+          tmp.select();
+          try { document.execCommand('copy') ? resolve() : reject(); }
+          catch (e) { reject(e); }
+          document.body.removeChild(tmp);
+        });
+      }
+
+      document.querySelector('.notepad-panel .panel-actions').addEventListener('click', function (e) {
+        var btn = e.target.closest('button');
+        if (!btn) return;
+
+        if (btn.id === 'copyAllBtn') {
+          e.stopPropagation();
+          copyText(fullContent()).then(
+            function () { flash(btn, 'Copied!'); },
+            function () { flash(btn, 'Copy failed'); }
+          );
+        } else if (btn.id === 'downloadBtn') {
+          e.stopPropagation();
+          var blob = new Blob([fullContent()], { type: 'text/plain;charset=utf-8' });
+          var a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'seeders-' + new Date().toISOString().slice(0, 10) + '.txt';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(a.href);
+        }
+      }, true);
+    })();
+  </script>
+</body>
+</html>

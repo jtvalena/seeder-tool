@@ -1,0 +1,159 @@
+<?php
+
+namespace App\Models\Operations;
+
+use App\Models\ContainerType;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Operations\ContainerItem;
+use App\Models\Operations\Warehouse;
+use App\Models\User;
+use App\Traits\MorphMap;
+use Illuminate\Support\Facades\DB;
+
+class Container extends Model implements Auditable
+{
+    use SoftDeletes;
+    use \OwenIt\Auditing\Auditable;
+    use MorphMap;
+
+    protected $appends = [
+        'morphMapKey',
+        'warehouse_name',
+        'status_text',
+        'user_name',
+        'received_by_name',
+        'po_number',
+        'created_by_name'
+    ];
+
+    protected $fillable = [
+        'doc_num',
+        'container_num',
+        'confirm_date',
+        'remarks',
+        'warehouse_id',
+        'user_id',
+        'status',
+        'received_by',
+        'received_date',
+        'loading_list_id',
+        'broker_id',
+        'broker',
+        'bl_number',
+        'vessel_number',
+        'spare_parts_boxes',
+        'spare_parts_boxes_received',
+        'po_id',
+        'created_by',
+        'container_type_id',
+        'parent_container_id',
+        'shipping_line_status_id',
+    ];
+
+    public function container_items()
+    {
+        return $this->hasMany(ContainerItem::class, 'container_id');
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'received_by');
+    }
+
+    public function container_type()
+    {
+        return $this->belongsTo(ContainerType::class);
+    }
+
+    public function getWarehouseNameAttribute(){
+        $warehouse_name = !empty($this->warehouse) ? $this->warehouse->name : '';
+        unset($this->warehouse);
+        return $warehouse_name;
+    }
+
+    public function getUserNameAttribute(){
+        $user_name = !empty($this->user) ? $this->user->name : '';
+        unset($this->user);
+        return $user_name;
+    }
+
+    public function getReceivedByNameAttribute(){
+        $received_by_name = !empty($this->receiver) ? $this->receiver->name : '';
+        unset($this->receiver);
+        return $received_by_name;
+    }
+
+    public function getPoNumberAttribute(){
+        $po_number = DB::table('procurement_purchase_orders')->where('id',$this->po_id)->value('po_number');
+        return !!$po_number ? $po_number : 'No PO Attached';
+    }
+
+    public function getCreatedByNameAttribute()
+    {
+        $user_name = !empty($this->creator) ? $this->creator->name : '';
+        unset($this->creator);
+        return $user_name;
+    }
+
+    /**
+     * Boot all of the bootable traits on the model.
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $latest = Container::all()->last();
+            if(!empty($latest)){
+                $model->doc_num = ($latest->doc_num != null) ? $latest->doc_num + 1: 1;
+            }else{
+                $model->doc_num = 1;
+            }
+
+        });
+    }
+
+    public function getStatusTextAttribute()
+    {
+        /*
+            statuses
+            0 = 'pending'
+            1 = 'approved'
+            2 = 'completed'
+            3 = 'rejected'
+            4 = 'canceled'
+            5 = 'deleted'
+        */
+
+        if($this->status==0){
+            return 'pending';
+        }elseif($this->status==1){
+            return 'approved';
+        }elseif($this->status==2){
+            return 'completed';
+        }elseif($this->status==3){
+            return 'rejected';
+        }elseif($this->status==4){
+            return 'canceled';
+        }elseif($this->status==5){
+            return 'deleted';
+        }
+    }
+}
