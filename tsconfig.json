@@ -19,7 +19,6 @@
     "jsx": "react-jsx",
     "incremental": true,
     "types": [
-      "vinext/types",
       "node"
     ],
     "paths": {
