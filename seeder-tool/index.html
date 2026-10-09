@@ -8,16 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-react@0.448.0/dist/lucide.min.css">
 </head>
 <body class="dark-mode">
   <div class="app-container">
     <!-- Top Navigation Header -->
     <header class="app-header">
       <div class="brand">
-        <div class="logo-icon">⚡</div>
+        <div class="logo-icon"> <Sparkles /> </div>
         <div class="brand-text">
-          <h1>Seeder AutoFill Tool</h1>
-          <span class="badge">v1.0</span>
+          <h1>Seeder Tool</h1>
+          <!-- <span class="badge">v1.0</span> -->
         </div>
       </div>
       <div class="header-actions">
@@ -25,8 +26,8 @@
           Models & Columns
         </button>
         <button id="themeToggleBtn" class="btn btn-icon" title="Toggle Theme">
-          <span class="sun-icon">☀️</span>
-          <span class="moon-icon">🌙</span>
+          <span class="sun-icon"> <Sun /> </span>
+          <span class="moon-icon"> <Moon /> </span>
         </button>
       </div>
     </header>

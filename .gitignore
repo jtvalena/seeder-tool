@@ -6,3 +6,5 @@ next-env.d.ts
 .vinext/
 .cloudflare/
 app/data/models-generated.json
+.neon
+.neon

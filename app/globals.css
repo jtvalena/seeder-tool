@@ -454,7 +454,6 @@ select.form-control {
   margin: 8px 18px 0;
   padding: 10px 14px;
   border: 1px solid rgba(127, 127, 127, 0.35);
-  border-left: 3px solid #6366f1;
   background: rgba(127, 127, 127, 0.12);
   font-family: var(--font-mono);
   font-size: 13px;
@@ -496,9 +495,6 @@ select.form-control {
   word-break: break-all;
 }
 
-.notepad-textarea:focus {
-  border-color: var(--border-focus);
-}
 
 /* ─── Buttons ────────────────────────────────────────────── */
 .btn {
@@ -565,7 +561,7 @@ select.form-control {
 }
 
 .btn-icon {
-  padding: 6px 10px;
+  padding: 10px;
   background: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--text-main);
@@ -661,6 +657,27 @@ body.light-mode .moon-icon { display: inline; }
   justify-content: flex-end;
   background: var(--bg-input);
   flex-shrink: 0;
+}
+
+/* ─── Modal size variants & nested backdrop ─────────────── */
+.modal-card--sm {
+  max-width: 460px;
+}
+
+.modal-backdrop--nested {
+  z-index: 1100;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal-footer {
+  gap: 8px;
+}
+
+.form-hint {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-left: 4px;
 }
 
 /* ─── Model Cards ────────────────────────────────────────── */

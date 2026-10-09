@@ -4,6 +4,9 @@
   "private": true,
   "packageManager": "npm",
   "dependencies": {
+    "@neon/env": "^1.5.3",
+    "@neondatabase/serverless": "^1.2.0",
+    "lucide-react": "^1.54.0",
     "next": "^16.4.0",
     "react": "latest",
     "react-dom": "latest"
@@ -11,6 +14,7 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^2.0.0-beta.sha-52b0dc0e9",
     "@cloudflare/workers-response-store": "^1.0.1",
+    "@neon/config": "latest",
     "@tailwindcss/postcss": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
@@ -21,8 +25,8 @@
     "cf": "^1.0.0-beta.13",
     "tailwindcss": "latest",
     "typescript": "latest",
-    "vite": "^8.3.0",
-    "vinext": "^1.0.1"
+    "vinext": "^1.0.1",
+    "vite": "^8.3.0"
   },
   "type": "module",
   "scripts": {

@@ -8,6 +8,8 @@ interface SearchableSelectProps {
   placeholder?: string;
   onChange: (val: string, isSelection?: boolean) => void;
   allowCustom?: boolean;
+  /** When true, always show ALL options — never filter. Just highlight the active/matching one. */
+  noFilter?: boolean;
 }
 
 export default function SearchableSelect({
@@ -16,6 +18,7 @@ export default function SearchableSelect({
   placeholder = 'Search...',
   onChange,
   allowCustom = true,
+  noFilter = false,
 }: SearchableSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [inputVal, setInputVal] = useState(value);
@@ -28,11 +31,21 @@ export default function SearchableSelect({
     setInputVal(value);
   }, [value]);
 
-  const filtered = options.filter(opt =>
-    opt.toLowerCase().includes(inputVal.trim().toLowerCase())
-  );
+  // When noFilter is true, always show everything; otherwise narrow by input text.
+  const filtered = noFilter
+    ? options
+    : options.filter(opt => opt.toLowerCase().includes(inputVal.trim().toLowerCase()));
 
-  const open = () => { setIsOpen(true); setHighlighted(-1); };
+  const open = () => {
+    setIsOpen(true);
+    // When noFilter, pre-highlight the currently selected option so the user can see it.
+    if (noFilter) {
+      const idx = options.indexOf(value);
+      setHighlighted(idx >= 0 ? idx : -1);
+    } else {
+      setHighlighted(-1);
+    }
+  };
   const close = () => { setIsOpen(false); setHighlighted(-1); };
 
   const handleSelect = (opt: string) => {
@@ -55,7 +68,7 @@ export default function SearchableSelect({
     if (highlighted >= 0 && itemRefs.current[highlighted]) {
       itemRefs.current[highlighted]!.scrollIntoView({ block: 'nearest' });
     }
-  }, [highlighted]);
+  }, [highlighted, isOpen]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') {
@@ -118,7 +131,7 @@ export default function SearchableSelect({
                 ref={el => { itemRefs.current[idx] = el; }}
                 className={[
                   'searchable-option',
-                  opt === inputVal ? 'selected' : '',
+                  opt === value ? 'selected' : '',
                   idx === highlighted ? 'highlighted' : '',
                 ].filter(Boolean).join(' ')}
                 onClick={() => handleSelect(opt)}
