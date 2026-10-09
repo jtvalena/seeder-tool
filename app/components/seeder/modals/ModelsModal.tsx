@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Toast } from '../types';
 import AddModelDialog from './AddModelDialog';
+import { PlusIcon, SearchIcon } from 'lucide-react';
 
 interface ModalModel {
   name: string;
@@ -138,24 +139,21 @@ export default function ModelsModal({
 
           <div className="modal-body">
             {/* Toolbar */}
-            <div className="modal-toolbar">
-              <button className="btn btn-sm btn-primary" onClick={() => setIsAddDialogOpen(true)}>
-                + Add New Model
-              </button>
-              <button className="btn btn-sm btn-secondary" onClick={handleResetModels}>
-                Reset to Reference Defaults
-              </button>
-            </div>
-
             {/* Search */}
-            <div className="form-group">
+            <div className="flex flex-row items-center gap-2">
+              <SearchIcon size={16} className='text-gray-500' />
               <input
                 type="text"
-                className="form-control"
-                placeholder={`Search models… (${modalModels.length} total)`}
+                className="py-2 px-4 w-full bg-transparent focus:outline-none"
+                placeholder={`Search models…`}
                 value={modelSearch}
                 onChange={e => setModelSearch(e.target.value)}
               />
+
+              <button className="flex flex-row items-center gap-2 btn btn-sm btn-primary text-white" onClick={() => setIsAddDialogOpen(true)}>
+                <PlusIcon size={16} />
+                Add
+              </button>
             </div>
 
             {/* Model list */}

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Pin, Copy, Undo2, Trash2 } from 'lucide-react';
+import { Pin, Copy, Undo2, Trash2, GapVertical } from 'lucide-react';
 import { FIXED_HEADER } from './types';
 
 interface NotepadPanelProps {
@@ -12,6 +12,7 @@ interface NotepadPanelProps {
   onDownload: () => void;
   onUndo: () => void;
   onClear: () => void;
+  onAddBreak: () => void;
   // CSV import
   csvImportRef: React.RefObject<HTMLInputElement | null>;
   onCsvImport: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,7 +24,7 @@ interface NotepadPanelProps {
 export default function NotepadPanel({
   notepad, setNotepad, notepadRef,
   historyStack,
-  onCopy, onDownload, onUndo, onClear,
+  onCopy, onDownload, onUndo, onClear, onAddBreak,
   csvImportRef, onCsvImport,
 }: NotepadPanelProps) {
   return (
@@ -42,6 +43,10 @@ export default function NotepadPanel({
           </button>
           <button className="btn btn-sm btn-secondary" onClick={onUndo} disabled={historyStack.length === 0}>
             <Undo2 size={16} /> Undo
+          </button>
+          <button className="btn btn-sm btn-secondary" onClick={onAddBreak}>
+            <GapVertical size={16} />
+            Add Break
           </button>
           <button className="btn btn-sm btn-primary" onClick={onCopy}>
             <Copy size={16} /> Copy

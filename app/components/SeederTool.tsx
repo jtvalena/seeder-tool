@@ -34,7 +34,7 @@ export default function SeederTool({
     // notepad
     notepad, setNotepad, notepadRef,
     historyStack,
-    handleCopyAll, handleDownload, handleUndo, handleClear,
+    handleCopyAll, handleDownload, handleUndo, handleClear, handleAddBreak,
     // csv
     csvImportRef, handleCsvFileChange,
     // toasts
@@ -76,6 +76,7 @@ export default function SeederTool({
           onDownload={handleDownload}
           onUndo={handleUndo}
           onClear={handleClear}
+          onAddBreak={handleAddBreak}
           csvImportRef={csvImportRef}
           onCsvImport={handleCsvFileChange}
         />

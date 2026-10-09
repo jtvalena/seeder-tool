@@ -227,23 +227,6 @@ export function useSeederTool(
     setNotepad(prev => prev.trim() ? prev + '\n\n' + chunk : chunk);
     showToast(`Appended ${seederType} to notepad!`, 'success');
 
-    // Persist to NeonDB (best-effort)
-    fetch('/api/seeders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        seederType,
-        company: companyVal,
-        output: chunk,
-        questions: lines.slice(2).map(line => {
-          const colon = line.indexOf(':');
-          return colon > -1
-            ? { key: line.slice(0, colon).trim(), value: line.slice(colon + 1).trim() }
-            : { key: line.trim(), value: '' };
-        }),
-      }),
-    }).catch(() => { /* offline / no DB */ });
-
     setTimeout(() => {
       if (notepadRef.current) notepadRef.current.scrollTop = notepadRef.current.scrollHeight;
     }, 50);
@@ -306,6 +289,16 @@ export function useSeederTool(
     setNotepad(prev);
     showToast('Undid last generated entry', 'info');
   }, [historyStack, showToast]);
+
+  const handleAddBreak = useCallback(() => {
+    if (!notepad.trim()) { showToast('Notepad is empty!', 'error'); return; }
+    setHistoryStack(prev => [...prev, notepad]);
+    setNotepad(prev => prev.trimEnd() + '\n\nEND');
+    showToast('Break added', 'info');
+    setTimeout(() => {
+      if (notepadRef.current) notepadRef.current.scrollTop = notepadRef.current.scrollHeight;
+    }, 50);
+  }, [notepad, notepadRef, showToast]);
 
   const handleClear = useCallback(() => {
     if (!notepad.trim()) return;
@@ -510,7 +503,7 @@ export function useSeederTool(
     // notepad
     notepad, setNotepad, notepadRef,
     historyStack, entryCount,
-    handleCopyAll, handleDownload, handleUndo, handleClear,
+    handleCopyAll, handleDownload, handleUndo, handleClear, handleAddBreak,
     // csv
     csvImportRef, handleCsvFileChange,
     // toasts
