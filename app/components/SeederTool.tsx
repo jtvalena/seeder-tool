@@ -1,11 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { useSeederTool }  from './seeder/useSeederTool';
 import AppHeader          from './seeder/AppHeader';
 import GeneratorPanel     from './seeder/GeneratorPanel';
 import NotepadPanel       from './seeder/NotepadPanel';
 import ToastContainer     from './seeder/ToastContainer';
 import ModelsModal        from './seeder/modals/ModelsModal';
+import ArrayThis          from './ArrayThis';
+
+type Tab = 'seeder' | 'arraythis';
 
 // ─────────────────────────────────────────────
 // SeederTool — root orchestrator
@@ -18,6 +22,8 @@ export default function SeederTool({
   initialModels: Record<string, string[]>;
   modelCount: number;
 }) {
+  const [activeTab, setActiveTab] = useState<Tab>('seeder');
+
   const {
     // theme
     theme, setTheme,
@@ -49,8 +55,25 @@ export default function SeederTool({
         onOpenModels={openModelsModal}
       />
 
-      <main className="workspace">
-        <GeneratorPanel
+      {/* Tab Bar */}
+      <div className="tab-bar">
+        <button
+          className={`tab-btn${activeTab === 'seeder' ? ' active' : ''}`}
+          onClick={() => setActiveTab('seeder')}
+        >
+          Seeder Generator
+        </button>
+        <button
+          className={`tab-btn${activeTab === 'arraythis' ? ' active' : ''}`}
+          onClick={() => setActiveTab('arraythis')}
+        >
+          ArrayThis
+        </button>
+      </div>
+
+      {activeTab === 'seeder' ? (
+        <main className="workspace">
+          <GeneratorPanel
           company={company}
           setCompany={setCompany}
           customCompany={customCompany}
@@ -80,7 +103,10 @@ export default function SeederTool({
           csvImportRef={csvImportRef}
           onCsvImport={handleCsvFileChange}
         />
-      </main>
+        </main>
+      ) : (
+        <ArrayThis />
+      )}
 
       {isModelsModalOpen && (
         <ModelsModal
